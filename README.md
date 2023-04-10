@@ -1,3 +1,3 @@
-# default
+# Subsonics
 
-Modèle de projet par défaut.
+Bot Discord Youtube Reader

@@ -1,11 +1,13 @@
 {
-  "name": "subsonics-bot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "start": "nodemon main.js"
-  },
+  "name": "subsonics-discord",
   "author": "Raphix",
-  "license": "ISC"
+  "version": "1.0.0",
+  "dependencies": {
+    "discord.js": "^14.9.0",
+    "erela.js": "^2.4.0",
+    "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "start": "nodemon src/main.js"
+  }
 }
