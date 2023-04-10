@@ -4,7 +4,7 @@ module.exports = {
 
     data: new SlashCommandBuilder()
     .setName("pause")
-    .setDescription("Met en pause la musique joué !"),
+    .setDescription("Met en pause la musique jouée !"),
 
     async execute(client, interaction) {
 
@@ -19,7 +19,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                 .setColor(0x03ff2d)
                 .setTitle('Pause !')
-                .setDescription("**Ok, une entracte est demandé par " + interaction.member.user.username + "**")
+                .setDescription("**Ok, une entracte est demandée par " + interaction.member.user.username + "**")
                 .setTimestamp();
 
             
@@ -27,13 +27,13 @@ module.exports = {
      
                 player.pause(true)
             } else {
-                interaction.reply("**Aucune musique n'est actuellement joué !**")
+                interaction.reply("**Aucune musique n'est actuellement jouée !**")
 
             }
 
         } else {
 
-            interaction.reply("**Aucune musique n'est actuellement joué !**")
+            interaction.reply("**Aucune musique n'est actuellement jouée !**")
         }
 
     }

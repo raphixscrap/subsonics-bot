@@ -4,7 +4,7 @@ module.exports = {
 
     data: new SlashCommandBuilder()
     .setName("resume")
-    .setDescription("Met en pause la musique joué !"),
+    .setDescription("Remet la musique qui était en pause !"),
 
     async execute(client, interaction) {
 
@@ -19,21 +19,22 @@ module.exports = {
                 const embed = new EmbedBuilder()
                 .setColor(0x03ff2d)
                 .setTitle('C\'est reparti !')
-                .setDescription("**Ok, Fin de l'entracte, c'est reparti et c'est demandé par " + interaction.member.user.username + "**")
+                .setDescription("**Ok, Fin de l'entracte, c'est reparti et c'est demandée par " + interaction.member.user.username + "**")
                 .setTimestamp();
 
             
                 interaction.reply({embeds: [embed]})
                
                 player.pause(false)
+               
             } else {
-                interaction.reply("**Aucune musique n'est actuellement joué !**")
+                interaction.reply("**Aucune musique n'est actuellement jouée !**")
 
             }
 
         } else {
 
-            interaction.reply("**Aucune musique n'est actuellement joué !**")
+            interaction.reply("**Aucune musique n'est actuellement jouée !**")
         }
 
     }

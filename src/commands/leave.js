@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { Player } = require("erela.js");
 
 module.exports = {
 
@@ -11,10 +12,11 @@ module.exports = {
         if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
    
         let player = client.manager.players.get(interaction.guild.id)
+        
 
         if(player) {
 
-            player.disconnect()
+            player.destroy()
 
             const embed = new EmbedBuilder()
             .setColor(0xff0000)
@@ -28,7 +30,7 @@ module.exports = {
 
         } else {
 
-            interaction.reply("**Aucune musique n'est actuellement joué !**")
+            interaction.reply("**Aucune musique n'est actuellement jouée !**")
         }
 
     }

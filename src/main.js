@@ -1,4 +1,6 @@
-const { Client, GatewayIntentBits, Collection } = require("discord.js")
+function startApp() {
+
+    const { Client, GatewayIntentBits, Collection } = require("discord.js")
 const { REST, Routes } = require("discord.js")
 const fs = require("node:fs")
 const config = require("./config.json")
@@ -10,6 +12,7 @@ const client = new Client({
 })
 
 client.commands = new Collection()
+client.queue = []
 
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
@@ -90,8 +93,8 @@ client.on("interactionCreate", (interaction) => {
 
 const nodes = [
     {
-      host: "lavalink.lexnet.cc",
-      password: "lexn3tl@val!nk",
+      host: "lavalink.devamop.in",
+      password: "DevamOP",
       port: 443,
       secure: true
     }
@@ -126,3 +129,15 @@ client.on("raw", d => client.manager.updateVoiceState(d));
 // Client Manager
 
 client.login(config.token)
+    
+}
+  
+  function handleFatalError(error) {
+    console.error('Erreur fatale :', error);
+    console.log('Redémarrage en cours...');
+    startApp();
+  }
+  
+  process.on('uncaughtException', handleFatalError);
+  
+  startApp();
