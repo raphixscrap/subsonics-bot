@@ -1,3 +1,5 @@
+let tryTime = 0;
+
 function startApp() {
 
     const { Client, GatewayIntentBits, Collection } = require("discord.js")
@@ -12,7 +14,7 @@ const client = new Client({
 })
 
 client.commands = new Collection()
-client.queue = []
+client.dictator = false;
 
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
@@ -129,12 +131,21 @@ client.on("raw", d => client.manager.updateVoiceState(d));
 // Client Manager
 
 client.login(config.token)
+
+tryTime = 0
     
 }
   
   function handleFatalError(error) {
     console.error('Erreur fatale :', error);
     console.log('Redémarrage en cours...');
+
+    if(tryTime == 10) {
+
+        process.exit(1)
+    }
+
+    tryTime += 1;
     startApp();
   }
   
