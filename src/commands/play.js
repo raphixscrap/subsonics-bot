@@ -60,7 +60,7 @@ module.exports = {
 
             const embed = await new EmbedBuilder()
             .setColor(0x15e6ed)
-            .setTitle('**Lecture de **' + songs.tracks[0].title)
+            .setTitle('**Lecture de : **' + songs.tracks[0].title)
             .setDescription('**Demandé par **' + interaction.member.user.username)
             .addFields({name: "Auteur", value: songs.tracks[0].author},
                        {name: "URL", value:songs.tracks[0].uri})
@@ -72,7 +72,7 @@ module.exports = {
                 interaction.reply({embeds: [embed]})
             } catch(error) {
 
-                interaction.reply({embeds: [embed]})
+                console.log(error)
             }
                 
 
@@ -84,7 +84,7 @@ module.exports = {
 
             const embed = await new EmbedBuilder()
             .setColor(0x15e6ed)
-            .setTitle('**Ajout dans la liste de lecture **' + songs.tracks[0].title)
+            .setTitle('**Ajout dans la liste de lecture **: ' + songs.tracks[0].title)
             .setDescription('**Demandé par **' + interaction.member.user.username)
             .addFields({name: "Auteur", value: songs.tracks[0].author},
                        {name: "URL", value:songs.tracks[0].uri})
@@ -100,7 +100,7 @@ module.exports = {
                 interaction.reply({embeds: [embed]})
             } catch(error) {
 
-                interaction.reply({embeds: [embed]})
+                console.log(error)
             }
 
 

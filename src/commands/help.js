@@ -21,7 +21,8 @@ module.exports = {
                        {name: "/queue <afficher/supprimer>", value: "Permet d'afficher ou de supprimer les titres de la liste de lecture."},
                        {name: "/state", value: "Donne l'état de la musique"},
                        {name: "/skip", value: "Passer à la chanson suivante."},
-                       {name: "/back", value: "Revenir à la chanson précédente."})
+                       {name: "/back", value: "Revenir à la chanson précédente."},
+                       {name: "/playlist", value: "Permet d'ajouter à la liste de lecture toute une playlist."})
             .setTimestamp()
             .setThumbnail("https://static.wikia.nocookie.net/codelyoko/images/9/95/Subdigitals.jpg/revision/latest/scale-to-width-down/180?cb=20120105180510&path-prefix=fr");
         

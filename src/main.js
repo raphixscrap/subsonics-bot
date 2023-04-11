@@ -2,7 +2,7 @@ let tryTime = 0;
 
 function startApp() {
 
-    const { Client, GatewayIntentBits, Collection } = require("discord.js")
+const { Client, GatewayIntentBits, Collection } = require("discord.js")
 const { REST, Routes } = require("discord.js")
 const fs = require("node:fs")
 const config = require("./config.json")
@@ -136,7 +136,7 @@ tryTime = 0
     
 }
   
-  function handleFatalError(error) {
+function handleFatalError(error) {
     console.error('Erreur fatale :', error);
     console.log('Redémarrage en cours...');
 
@@ -146,9 +146,10 @@ tryTime = 0
     }
 
     tryTime += 1;
+    client = null
     startApp();
-  }
+}
   
-  process.on('uncaughtException', handleFatalError);
+process.on('uncaughtException', handleFatalError);
   
-  startApp();
+startApp();
