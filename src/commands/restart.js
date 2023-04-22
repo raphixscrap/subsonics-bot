@@ -51,6 +51,18 @@ module.exports = {
                   if (guild) guild.shard.send(payload);
                 }
               });
+
+                // Emitted whenever a node connects
+                client.manager.on("nodeConnect", node => {
+                    console.log(`Node "${node.options.identifier}" connected.`)
+                })
+
+                // Emitted whenever a node encountered an error
+                client.manager.on("nodeError", (node, error) => {
+                    console.log(`Node "${node.options.identifier}" encountered an error: ${error.message}.`)
+                })
+
+
             
 
             
