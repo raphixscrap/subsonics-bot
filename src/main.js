@@ -1,5 +1,13 @@
 let tryTime = 0;
 
+if ("ENV" in process.env) {
+    if(process.env.ENV == "TEST") {
+      process.exit(0)
+  
+    }
+  
+} 
+
 function startApp() {
 
 const { Client, GatewayIntentBits, Collection } = require("discord.js")
