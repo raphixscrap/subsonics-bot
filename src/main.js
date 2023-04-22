@@ -6,7 +6,7 @@ if ("ENV" in process.env) {
   
     }
   
-    
+
 } 
 
 function startApp() {
@@ -81,6 +81,12 @@ client.once("ready", () => {
 
             commandManager.set([]);
     }
+})
+
+client.on("voiceStateUpdate", (oldMember, newMember) => {
+
+    console.log(oldMember, newMember)
+
 })
 
 client.on("interactionCreate", (interaction) => {

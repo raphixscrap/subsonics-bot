@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, Manager } = require("discord.js");
+const { Manager } = require("erela.js")
+
 
 module.exports = {
 
@@ -20,7 +22,40 @@ module.exports = {
         
             interaction.reply({embeds: [embed]})
 
-            functionWhoAbort()
+
+            
+            let player = client.manager.players.get(interaction.guild.id)
+
+            if(!player) { 
+                
+                player.destroy()
+
+            }
+
+
+
+            const nodes = [
+                {
+                  host: "lavalink.devamop.in",
+                  password: "DevamOP",
+                  port: 443,
+                  secure: true
+                }
+              ];
+            
+              client.manager = new Manager({
+                // The nodes to connect to, optional if using default lavalink options
+                nodes,
+                // Method to send voice data to Discord
+                send: (id, payload) => {
+                  const guild = client.guilds.cache.get(id);
+                  // NOTE: FOR ERIS YOU NEED JSON.stringify() THE PAYLOAD
+                  if (guild) guild.shard.send(payload);
+                }
+              });
+            
+
+            
 
         } else {
 
