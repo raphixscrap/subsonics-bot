@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-
+const { Manager } = require("erela.js")
 
 
 module.exports = {
