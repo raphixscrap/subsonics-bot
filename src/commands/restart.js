@@ -32,37 +32,8 @@ module.exports = {
 
 
 
-            const nodes = [
-                {
-                  host: "lavalink.devamop.in",
-                  password: "DevamOP",
-                  port: 443,
-                  secure: true
-                }
-              ];
-            
-              client.manager = new Manager({
-                // The nodes to connect to, optional if using default lavalink options
-                nodes,
-                // Method to send voice data to Discord
-                send: (id, payload) => {
-                  const guild = client.guilds.cache.get(id);
-                  // NOTE: FOR ERIS YOU NEED JSON.stringify() THE PAYLOAD
-                  if (guild) guild.shard.send(payload);
-                }
-              });
-
-                // Emitted whenever a node connects
-                client.manager.on("nodeConnect", node => {
-                    console.log(`Node "${node.options.identifier}" connected.`)
-                })
-
-                // Emitted whenever a node encountered an error
-                client.manager.on("nodeError", (node, error) => {
-                    console.log(`Node "${node.options.identifier}" encountered an error: ${error.message}.`)
-                })
-
-
+            await client.manager.destroyNode()
+            await client.manager.createNode()
             
 
             
