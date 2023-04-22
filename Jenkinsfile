@@ -9,8 +9,9 @@ pipeline {
                     sh "rm -rf subsonics"
                     sh "git clone https://git.raphix.fr/raphix/subsonics.git"
                     sh "cd subsonics"
+                    sh "cd src"
                     sh "npm i"
-                    sh "ENV='TEST' node bin/www"
+                    sh "ENV='TEST' node main.js"
                 }
                 
             }
