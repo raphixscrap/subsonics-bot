@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, Manager } = require("discord.js");
-const { Manager } = require("erela.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+
 
 
 module.exports = {
