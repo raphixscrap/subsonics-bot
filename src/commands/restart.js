@@ -22,18 +22,6 @@ module.exports = {
         
             interaction.reply({embeds: [embed]})
 
-
-            
-            let player = client.manager.players.get(interaction.guild.id)
-
-            if(!player) { 
-                
-                player.destroy()
-
-            }
-
-
-
             const nodes = [
                 {
                   host: "lavalink.devamop.in",
