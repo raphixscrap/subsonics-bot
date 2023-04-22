@@ -29,13 +29,18 @@ module.exports = {
                 player.destroy()
 
             }
-
-
-
-            await client.manager.destroyNode()
-            await client.manager.createNode()
             
+            const nodes = [
+                {
+                  host: "lavalink.devamop.in",
+                  password: "DevamOP",
+                  port: 443,
+                  secure: true
+                }
+              ];
 
+              
+              client.manager.createNode(nodes)
             
 
         } else {
