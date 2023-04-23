@@ -1,3 +1,5 @@
+const { channel } = require("node:diagnostics_channel");
+
 let tryTime = 0;
 
 if ("ENV" in process.env) {
@@ -70,6 +72,7 @@ const rest = new REST().setToken(config.token);
 client.once("ready", () => {
 
     console.log("Le meilleur groupe de musique est prêt !")
+    client.user.setActivity(`beaucoup de choses !`, { type: "LISTENING" })
     client.manager.init(client.user.id);
 
     const commandManager = client.application.commands;
@@ -85,8 +88,18 @@ client.once("ready", () => {
 
 client.on("voiceStateUpdate", (oldMember, newMember) => {
 
-    console.log(oldMember, newMember)
+    let player = client.manager.players.get(oldMember.guild.id)
 
+    if(player) {
+
+        client.channels.fetch(player.options.voiceChannel).then(channel => {
+
+            if(channel.members.size <= 1) {
+
+                player.destroy()
+            }
+        })
+    }
 })
 
 client.on("interactionCreate", (interaction) => {
@@ -144,6 +157,8 @@ client.on("raw", d => client.manager.updateVoiceState(d));
   
 
 // Client Manager
+
+
 
 client.login(config.token)
 
