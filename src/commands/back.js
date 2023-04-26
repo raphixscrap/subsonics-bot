@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -32,6 +33,7 @@ module.exports = {
 
         async function makeAction() {
 
+
         let embed = new EmbedBuilder()
                 .setColor(0xe033ff)
                 .setTitle('Liste de lecture')
@@ -40,6 +42,7 @@ module.exports = {
                 
                 let player = client.manager.players.get(interaction.guild.id)
                
+              
 
                 if(!player) {
 
@@ -53,8 +56,7 @@ module.exports = {
                     interaction.reply({embeds: [embed]})
                 } else {
 
-                    console.log("------------------------QUEUE.JS---------------------")
-                    console.log(client.manager.players.get(interaction.guild.id).queue)
+                   
                     let queue = client.manager.players.get(interaction.guild.id).queue;
                  
 
@@ -84,6 +86,9 @@ module.exports = {
                         
                     }
                 }
+
+                
+        process.emit("discordDoing")
 
             }
     }

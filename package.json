@@ -2,10 +2,22 @@
   "name": "subsonics-discord",
   "author": "Raphix",
   "version": "5.5",
+  "nodemonConfig": {
+    "ext": "js, html",
+    "ignore": [
+      "*.json",
+      "*.html"
+    ],
+    "delay": "2"
+  },
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "discord.js": "^14.9.0",
     "erela.js": "^2.4.0",
+    "express": "^4.18.2",
     "nodemon": "^2.0.22",
+    "socket.io": "^4.6.1",
+    "uuid": "^9.0.0",
     "ytfps": "^1.1.0"
   },
   "scripts": {

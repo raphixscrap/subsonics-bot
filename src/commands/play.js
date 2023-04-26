@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("@discordjs/builders");
 const { SlashCommandBuilder,  Embed } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -9,7 +10,7 @@ module.exports = {
     .addStringOption(option => option.setName("nom_ou_lien").setDescription("Le nom de la musique recherchée !").setRequired(true)),
 
     async execute(client, interaction) {
-
+        
         if(client.dictator == true ) {
 
             if((interaction.member._roles.includes("397725956598530050") == true | interaction.member.user.id == "486943594893017119")) {
@@ -34,9 +35,11 @@ module.exports = {
 
         async function makeAction() {
 
+           
+
         const song_name = interaction.options.getString("nom_ou_lien")
 
-       if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
+        if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
    
         let player = client.manager.players.get(interaction.guild.id)
 
@@ -71,8 +74,8 @@ module.exports = {
 
                 interaction.reply({embeds: [embed]})
             } catch(error) {
-
-                console.log(error)
+                log.bot.error("Error processing /play")
+                log.bot.error(error);
             }
                 
 
@@ -92,19 +95,19 @@ module.exports = {
             .setTimestamp();
     
             client.manager.players.get(interaction.guild.id).queue.add(songs.tracks[0])
-            console.log("------------------------PLAY.JS---------------------")
-            console.log(player.queue)
-            console.log("--------------------------------------------")
+          
             try {
 
-                interaction.reply({embeds: [embed]})
+              interaction.reply({embeds: [embed]})
             } catch(error) {
-
-                console.log(error)
+                log.bot.error("Error processing /play")
+                log.bot.error(error);
             }
 
 
         }
+
+        process.emit("discordDoing")
 
         }
     }

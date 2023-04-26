@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const packageJson = require('../../package.json');
+const log = require("../sublog")
 
 module.exports = {
 
@@ -9,7 +10,8 @@ module.exports = {
 
     async execute(client, interaction) {
 
-
+        process.emit("discordDoing")
+        
         const uptime = process.uptime();
         const minutes = Math.floor(uptime / 60);
         const seconds = Math.floor(uptime % 60);

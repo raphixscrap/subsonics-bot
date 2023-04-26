@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("@discordjs/builders");
 const { SlashCommandBuilder,  Embed } = require("discord.js");
+const log = require("../sublog")
 
 
 module.exports = {
@@ -35,6 +36,8 @@ module.exports = {
 
         async function makeAction() {
 
+            process.emit("discordDoing")
+
         const song_name = interaction.options.getString("lien")
 
        if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
@@ -62,12 +65,19 @@ module.exports = {
             try {
                 
                 var playlist = await ytfps(song_name)
+                var author = "Artiste inconnu !"
+
+                if(typeof playlist.author != "undefined" ) {
+
+                    author == playlist.author.name
+                }
+
 
                 const embed = await new EmbedBuilder()
                 .setColor(0x15e6ed)
                 .setTitle('**Lecture de la playlist : **' + playlist.title)
                 .setDescription('**Demandé par **' + interaction.member.user.username)
-                .addFields({name: "Auteur", value: playlist.author.name},
+                .addFields({name: "Auteur", value: author},
                           {name: "URL", value:playlist.url},
                           {name: "Nombre de videos", value:playlist.video_count + " vidéos"})
                 .setThumbnail(playlist.thumbnail_url)
@@ -78,18 +88,32 @@ module.exports = {
                     await interaction.reply({embeds: [embed]})
                 } catch(error) {
 
-                    console.log(error)
+                    log.bot.error(error);
                 }
 
+                addList(playlist, player)
 
-                for(var song of playlist.videos) {
+                async function addList(Pplaylist, Pplayer) {
+
+                    for(var song of Pplaylist.videos) {
         
-                    const song_finded = await client.manager.search(song.url)
-                    await client.manager.players.get(interaction.guild.id).queue.add(song_finded.tracks[0])
-    
+                        const song_finded = await client.manager.search(song.url)
+                        await client.manager.players.get(interaction.guild.id).queue.add(song_finded.tracks[0])
+        
+                    }
+
+                    if(Pplayer.playing == false) {
+
+                        await Pplayer.play()
+                    
+                    }
                 }
 
-            } catch(err) {
+                
+
+                await process.emit("discordDoing")
+
+            } catch(error) {
                 
                 const embed = new EmbedBuilder()
                 .setColor(0xff0303)
@@ -100,27 +124,21 @@ module.exports = {
                 embed.addFields(song_show)
                 interaction.reply({embeds: [embed]})
 
-                console.log(err)
+                log.bot.error(error);
 
 
             };
 
 
-            if(playlist != null) {
+          
     
-                if(!player.playing) {
-                
-                
-                    player.play()
-                    
-    
-                    
-                }
-            }
+               
+            
             
            
 
        
+            process.emit("discordDoing")
 
       
 

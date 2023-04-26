@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -8,7 +9,7 @@ module.exports = {
 
     async execute(client, interaction) {
 
-
+        process.emit("discordDoing")
         const embed = new EmbedBuilder()
         .setColor(0xb0f542)
         .setTitle('Résultat du ping')

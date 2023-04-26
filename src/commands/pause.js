@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -7,6 +8,8 @@ module.exports = {
     .setDescription("Met en pause la musique jouée !"),
 
     async execute(client, interaction) {
+
+        
 
         if(client.dictator == true ) {
 
@@ -31,6 +34,7 @@ module.exports = {
         }
 
         async function makeAction() {
+
 
         if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
    
@@ -59,6 +63,9 @@ module.exports = {
 
             interaction.reply("**Aucune musique n'est actuellement jouée !**")
         }
+
+        
+        process.emit("discordDoing")
         }
     }
 }

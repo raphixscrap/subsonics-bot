@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -7,6 +8,8 @@ module.exports = {
     .setDescription("Affiche l'état du lecteur !"),
 
     async execute(client, interaction) {
+
+       
 
         if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
    

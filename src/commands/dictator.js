@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -8,7 +9,7 @@ module.exports = {
 
     async execute(client, interaction) {
 
-        console.log(interaction.member._roles)
+       
 
         if(interaction.member._roles.includes("397725956598530050") == true | interaction.member.user.id == "486943594893017119") {
             if(client.dictator == true) {
@@ -52,7 +53,7 @@ module.exports = {
 
        
 
-       
+        process.emit("discordDoing")
     
     }
 }

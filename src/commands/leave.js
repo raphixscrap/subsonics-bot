@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { Player } = require("erela.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -56,6 +57,8 @@ module.exports = {
 
             interaction.reply("**Aucune musique n'est actuellement jouée !**")
         }
+
+        process.emit("discordDoing")
     }
     }
 

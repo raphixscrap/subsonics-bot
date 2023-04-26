@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -8,6 +9,8 @@ module.exports = {
     .addIntegerOption(option => option.setName("duration").setDescription("En seconde")),
 
     async execute(client, interaction) {
+
+        
 
         if(client.dictator == true ) {
 
@@ -58,7 +61,7 @@ module.exports = {
 
                 } catch (error) {
 
-                    console.log(error)
+                    log.bot.error(error);
                     interaction.reply("**Aucune musique n'est actuellement jouée !**")
                 }
                 
@@ -71,6 +74,8 @@ module.exports = {
             interaction.reply("**Aucune musique n'est actuellement jouée !**")
       
         }
+
+        process.emit("discordDoing")
         }
     }
 }

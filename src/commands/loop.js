@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -31,7 +32,7 @@ module.exports = {
         }
 
         async function makeAction() {
-
+          
         if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
    
         let player = client.manager.players.get(interaction.guild.id)
@@ -75,6 +76,10 @@ module.exports = {
             interaction.reply("**Aucune musique n'est actuellement jouée !**")
       
         }
+
+
+        process.emit("discordDoing")
+
         }
     }
 }

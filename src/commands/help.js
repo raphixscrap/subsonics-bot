@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -8,7 +9,7 @@ module.exports = {
 
     async execute(client, interaction) {
 
-        
+     
 
             const embed = new EmbedBuilder()
             .setColor(0x03ff2d)

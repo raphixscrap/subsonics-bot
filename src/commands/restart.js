@@ -1,4 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
+
 const { Manager } = require("erela.js")
 
 
@@ -10,7 +12,7 @@ module.exports = {
 
     async execute(client, interaction) {
 
-        console.log(interaction.member._roles)
+        
 
         if(interaction.member._roles.includes("397725956598530050") == true | interaction.member._roles.includes("397724656548970508") == true| interaction.member._roles.includes("397725128198455299") == true| interaction.member._roles.includes("397725552968204288") == true | interaction.member.user.id == "486943594893017119") {
             const embed = new EmbedBuilder()
@@ -56,7 +58,7 @@ module.exports = {
 
 
         }
-
+        process.emit("discordDoing")
     
     }
 }

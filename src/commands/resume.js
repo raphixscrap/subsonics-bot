@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -7,6 +8,8 @@ module.exports = {
     .setDescription("Remet la musique qui était en pause !"),
 
     async execute(client, interaction) {
+
+        
 
         if(client.dictator == true ) {
 
@@ -60,6 +63,8 @@ module.exports = {
 
             interaction.reply("**Aucune musique n'est actuellement jouée !**")
         }
+
+        process.emit("discordDoing")
         }
     }
 }

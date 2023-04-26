@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -7,6 +8,8 @@ module.exports = {
     .setDescription("Mélange la liste de lecture !"),
 
     async execute(client, interaction) {
+
+   
 
         if(client.dictator == true ) {
 
@@ -61,6 +64,8 @@ module.exports = {
             interaction.reply("**Aucune musique n'est actuellement jouée !**")
       
         }
+
+        process.emit("discordDoing")
         }
     }
 }

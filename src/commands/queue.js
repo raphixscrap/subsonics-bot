@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -36,6 +37,8 @@ module.exports = {
         }
 
         async function makeAction() {
+
+            
       
         if(!interaction.member.voice.channel) return interaction.reply({content:"Vous devez rejoindre un salon vocal !", ephemeral: true})
    
@@ -62,8 +65,6 @@ module.exports = {
                     interaction.reply({embeds: [embed]})
                 } else {
 
-                    console.log("------------------------QUEUE.JS---------------------")
-                    console.log(client.manager.players.get(interaction.guild.id).queue)
                     let queue = client.manager.players.get(interaction.guild.id).queue;
                  
 
@@ -75,12 +76,15 @@ module.exports = {
                         interaction.reply({embeds: [embed]})
                     } else {
                     
-
-                    for(song of queue) {
-
-                        const song_show = {name: queue.indexOf(song) + " - " + song.title, value: song.author}
+                    var fieldmax = 0
+                    for(var song of queue) {
+                        fieldmax += 1 
+                        if(fieldmax <= 25) {
+                            const song_show = {name: queue.indexOf(song) + " - " + song.title, value: song.author}
                         
-                        embed.addFields(song_show)
+                            embed.addFields(song_show)
+
+                        }
                     }
     
                     await interaction.reply({embeds: [embed]})
@@ -110,8 +114,6 @@ module.exports = {
                     interaction.reply({embeds: [embed]})
                 } else {
 
-                    console.log("------------------------QUEUE.JS---------------------")
-                    console.log(client.manager.players.get(interaction.guild.id).queue)
                     let queue = client.manager.players.get(interaction.guild.id).queue;
                  
 
@@ -129,8 +131,7 @@ module.exports = {
                         
                         const number = interaction.options.getInteger("number")
 
-                        console.log(number)
-
+                      
                         if(number != null) {
                             try {
                                 queue.splice(number, 1)
@@ -179,6 +180,8 @@ module.exports = {
 
                 await interaction.reply("**La commande a été mal éxécutée !**")
             }
+
+            process.emit("discordDoing")
         }
     }
 }

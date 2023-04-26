@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const log = require("../sublog")
 
 module.exports = {
 
@@ -7,6 +8,7 @@ module.exports = {
     .setDescription("Permet de passer à la musique suivante !"),
 
     async execute(client, interaction) {
+      
 
         if(client.dictator == true ) {
 
@@ -53,8 +55,7 @@ module.exports = {
                     interaction.reply({embeds: [embed]})
                 } else {
 
-                    console.log("------------------------QUEUE.JS---------------------")
-                    console.log(client.manager.players.get(interaction.guild.id).queue)
+          
                     let queue = client.manager.players.get(interaction.guild.id).queue;
                  
 
@@ -83,7 +84,7 @@ module.exports = {
                         
                     }
                 }
-
+                process.emit("discordDoing")
             }
     }
 }
