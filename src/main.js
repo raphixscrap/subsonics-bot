@@ -602,6 +602,7 @@ function startServer(client) {
                
                 if(req.query.error) {
                     socket.emit("authFailed")
+                    res.send("SubSonics Manager : ERREUR : DISCORD AUTH FAILED !")
                     log.server("Discord Auth : Erreur - Refus de connexion chez le service Discord : Token de Connexion : " + token + " associé à Client ID : " + socket.id)
 
                 } else {
