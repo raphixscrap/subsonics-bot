@@ -662,7 +662,7 @@ function startServer(client) {
 
     function createIdentity(response, token, socket) {
 
-      
+        log.server(response)
         log.server("Discord Auth : REQUESTING DATA - TOKEN : " + token + " - DISCORD_ACCESS_TOKEN : " + response.access_token)
 
         fetch('https://discord.com/api/users/@me', {
@@ -677,7 +677,8 @@ function startServer(client) {
     }
 
     function addIdentity(response, token, socket) {
-      
+        
+        log.server(response)
         log.server("Discord Auth : [IDENTITE] : Nouvelle identité - SOCKET_ID : " + socket.id + " - DISCORD_USER : " + response.username + "#" + response.discriminator)
         socket.emit("registerToken", token)
 
