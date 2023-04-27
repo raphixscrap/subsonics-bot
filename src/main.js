@@ -600,8 +600,9 @@ function startServer(client) {
                
                 const socket = authTokenWait.get(token)
                
-                if(req.query.code) {
+                if(req.query.error) {
                     socket.emit("authFailed")
+                    log.server("Discord Auth : Erreur - Refus de connexion chez le service Discord : Token de Connexion : " + token + " associé à Client ID : " + socket.id)
 
                 } else {
 
