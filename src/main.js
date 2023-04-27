@@ -618,7 +618,7 @@ function startServer(client) {
                         params.append('client_secret', "uwtyPOPKCgw6ciBs20qiJ7LJrW9Ziclo");
                         params.append('grant_type', 'authorization_code');
                         params.append('code', code);
-                        params.append('redirect_uri',  req.protocol + "://" + req.get('host') + "/redirect");
+                        params.append('redirect_uri',  link + "/redirect");
                         params.append('scope', 'identify guild');
 
                         fetch('https://discord.com/api/oauth2/token', {
