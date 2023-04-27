@@ -600,7 +600,10 @@ function startServer(client) {
                
                 const socket = authTokenWait.get(token)
                
-                
+                if(req.query.code) {
+                    socket.emit("authFailed")
+
+                } else {
 
                
                 const code = req.query.code
@@ -645,7 +648,7 @@ function startServer(client) {
                 }   
 
                
-               
+            }
 
             } else {
                 res.send("SubSonics Manager : ERREUR : AUCUN TOKEN ENREGISTRÉ !")
