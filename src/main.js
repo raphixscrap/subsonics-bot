@@ -129,7 +129,7 @@ function startDiscordBot() {
 
     const nodes = [
         {
-        host: "lavalink.lexnet.cc",
+        host: "eu-lavalink.lexnet.cc",
         password: "lexn3tl@val!nk",
         port: 443,
         secure: true
