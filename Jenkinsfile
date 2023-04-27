@@ -6,9 +6,9 @@ pipeline {
             steps {
                 script {
                     echo "[Subsonics-Deploy] - Test Stage"
-                    sh "rm -rf subsonics"
-                    sh "git clone https://git.raphix.fr/raphix/subsonics.git"
-                    sh "cd subsonics"
+                    sh "rm -rf bot"
+                    sh "git clone https://git.raphix.fr/subsonics/bot.git"
+                    sh "cd bot"
                     sh "npm i"
                     sh "ENV='TEST' node src/main.js"
                 }

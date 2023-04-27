@@ -1,7 +1,7 @@
 {
   "name": "subsonics-discord",
   "author": "Raphix",
-  "version": "5.5",
+  "version": "6.0",
   "nodemonConfig": {
     "ext": "js, html",
     "ignore": [

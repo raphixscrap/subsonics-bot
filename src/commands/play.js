@@ -46,9 +46,9 @@ module.exports = {
         if(!player) { 
             
             player = client.manager.create({
-            guild: interaction.guild.id,
-            voiceChannel: interaction.member.voice.channel.id,
-            textChannel: interaction.channel.id,
+                guild: interaction.guild.id,
+                voiceChannel: interaction.member.voice.channel.id,
+                textChannel: interaction.channel.id,
             });
 
             player.connect();

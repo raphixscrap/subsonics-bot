@@ -129,8 +129,8 @@ function startDiscordBot() {
 
     const nodes = [
         {
-        host: "lavalink.devamop.in",
-        password: "DevamOP",
+        host: "lavalink.lexnet.cc",
+        password: "lexn3tl@val!nk",
         port: 443,
         secure: true
         }
@@ -462,6 +462,35 @@ function startServer(client) {
 
         })
 
+        socket.on("loop", (token) => {
+
+            if(users.has(token)) {
+                
+                let player = client.manager.players.get("137291455336022018")
+
+                log.server("Looping demandé par" + users.get(token).username + "#" +  users.get(token).discriminator)
+
+                if(player) {
+
+                    if(player.queueRepeat == true) {
+                        player.setQueueRepeat(false)
+
+                    } else {
+                        player.setQueueRepeat(true)
+
+                    }
+                    
+                }    
+
+                actualize()
+            } else {
+                socket.emit("authFailed")
+
+            }
+
+
+        })
+
         socket.on("exit", (token) => {
 
             if(users.has(token)) {
@@ -530,13 +559,28 @@ function startServer(client) {
             "playing": 0,
             "current":null,
             "isOnline": false,
-            "queue": null
+            "queue": null,
+            "loop": false,
+            "durationNow": null,
+            "durationAll": null
         }
 
         if(player) {
 
             data["current"] = player.queue.current
 
+            if(player.queueRepeat == true) {
+
+                data["loop"] = true
+            } 
+
+            
+
+            if(player.queue.current) {
+                data["durationNow"] = player.position
+                data["durationAll"] = player.queue.current.duration
+            }
+            
             if(player.playing == true && player.paused == false) {
 
                 data["playing"] = 1
@@ -544,11 +588,11 @@ function startServer(client) {
                 data["playing"] = 0
 
             }
-            
+
             data["queue"] = player.queue;
             
             if(player.playing == true) {
-
+                
                  log.server("Musique : Musique actuelle : " + player.queue.current.title)
             }
                
@@ -667,7 +711,7 @@ function startServer(client) {
 
     function createIdentity(response, token, socket) {
 
-        console.log(response)
+  
         log.server("Discord Auth : REQUESTING DATA - TOKEN : " + token + " - DISCORD_ACCESS_TOKEN : " + response.access_token)
 
         fetch('https://discord.com/api/users/@me', {
@@ -684,7 +728,7 @@ function startServer(client) {
     async function addIdentity(response, token, socket) {
         
      
-        console.log(response)
+     
         log.server("Discord Auth : [IDENTITE] : Nouvelle identité - SOCKET_ID : " + socket.id + " - DISCORD_USER : " + response.username + "#" + response.discriminator)
         
 
@@ -694,24 +738,19 @@ function startServer(client) {
         
         await fs.writeFileSync(__dirname + path.sep + "tokens.json", JSON.stringify(tokens, null, 2))
 
-        await addAllUsers()
+        await users.set(token, response)
+
+
+
         
-        await socket.emit("successLogin", token)
+        socket.emit("successLogin", token)
         actualize()
 
         authTokenWait.delete(token)
 
     }
 
-    function addAllUsers() {
 
-        users = new Map()
-        for(var user in tokens) {
-    
-             users.set(user , tokens[user])
-        }
-        
-    }
         
 
     

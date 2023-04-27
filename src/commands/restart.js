@@ -34,8 +34,8 @@ module.exports = {
             
             const nodes = [
                 {
-                  host: "lavalink.devamop.in",
-                  password: "DevamOP",
+                  host: "lavalink.lexnet.cc",
+                  password: "lexn3tl@val!nk",
                   port: 443,
                   secure: true
                 }
