@@ -676,7 +676,7 @@ function startServer(client) {
        
     }
 
-    function addIdentity(response, token, socket) {
+    async function addIdentity(response, token, socket) {
         
      
         console.log(response)
@@ -690,8 +690,16 @@ function startServer(client) {
 
         tokens[token] = response
         
-        fs.writeFileSync(__dirname + path.sep + "tokens.json", JSON.stringify(tokens, null, 2))
+        await fs.writeFileSync(__dirname + path.sep + "tokens.json", JSON.stringify(tokens, null, 2))
 
+        await addAllUsers()
+       
+        actualize()
+        authTokenWait.delete(token)
+
+    }
+
+    function addAllUsers() {
 
         users = new Map()
         for(var user in tokens) {
@@ -699,9 +707,6 @@ function startServer(client) {
              users.set(user , tokens[user])
         }
         
-        actualize()
-        authTokenWait.delete(token)
-
     }
         
 
