@@ -683,9 +683,6 @@ function startServer(client) {
         log.server("Discord Auth : [IDENTITE] : Nouvelle identité - SOCKET_ID : " + socket.id + " - DISCORD_USER : " + response.username + "#" + response.discriminator)
         socket.emit("registerToken", token)
 
-        socket.emit("successLogin")
-
-       
         const tokens = require(__dirname + path.sep + "tokens.json")
 
         tokens[token] = response
@@ -693,8 +690,10 @@ function startServer(client) {
         await fs.writeFileSync(__dirname + path.sep + "tokens.json", JSON.stringify(tokens, null, 2))
 
         await addAllUsers()
-       
+        
+        await socket.emit("successLogin")
         actualize()
+
         authTokenWait.delete(token)
 
     }
