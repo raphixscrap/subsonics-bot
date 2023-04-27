@@ -18,8 +18,7 @@ pipeline {
         stage('[Subsonics] - Déploiement') {
             steps {
                 script {
-        
-                    def doesJavaRock = input(message: 'Confirmation de Déploiement', ok: 'Déployer')
+    
                     echo "[Subsonics-Deploy] - Deploy Stage"
                     sh "ssh raphix@raphix.fr sudo apt update -y"
                     sh "ssh raphix@raphix.fr sudo apt upgrade -y"

@@ -21,6 +21,7 @@
     "ytfps": "^1.1.0"
   },
   "scripts": {
-    "start": "nodemon src/main.js"
+    "start": "nodemon src/main.js",
+    "dev": "set DEV=true& nodemon src/main.js" 
   }
 }

@@ -186,10 +186,21 @@ function startServer(client) {
     const fs = require("fs")
     const path = require("path")
 
-    //const link = "http://localhost:4000"
-    const link = "https://subsonics.raphix.fr"
-    //const discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fredirect&response_type=code&scope=guilds%20identify"
-    const discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=https%3A%2F%2Fsubsonics.raphix.fr%2Fredirect&response_type=code&scope=identify%20guilds" 
+
+    var link = null
+    var discordlink = null
+
+    if(process.env.DEV == "true") {
+
+        log.server("DEV MOD ENABLED")
+        link = "http://localhost:4000" //DEV
+        discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fredirect&response_type=code&scope=guilds%20identify" //DEV
+    } else {
+        discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=https%3A%2F%2Fsubsonics.raphix.fr%2Fredirect&response_type=code&scope=identify%20guilds" //OFFICIEL
+        link = "https://subsonics.raphix.fr"
+    }
+
+
 
     var authTokenWait = new Map()
     var users = new Map()
