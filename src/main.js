@@ -681,7 +681,7 @@ function startServer(client) {
      
         console.log(response)
         log.server("Discord Auth : [IDENTITE] : Nouvelle identité - SOCKET_ID : " + socket.id + " - DISCORD_USER : " + response.username + "#" + response.discriminator)
-        socket.emit("registerToken", token)
+        
 
         const tokens = require(__dirname + path.sep + "tokens.json")
 
@@ -691,7 +691,7 @@ function startServer(client) {
 
         await addAllUsers()
         
-        await socket.emit("successLogin")
+        await socket.emit("successLogin", token)
         actualize()
 
         authTokenWait.delete(token)
