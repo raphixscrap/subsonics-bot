@@ -183,7 +183,7 @@ function startServer(client) {
     const fs = require("fs")
     const path = require("path")
 
-    var changeMusic = 0
+
     var link = null
     var discordlink = null
 
@@ -334,8 +334,7 @@ function startServer(client) {
         socket.on("getState", (token) => {
             reimportUser()
             actualize()
-            console.log(token)
-            console.log(users)
+
             const data = {
                 "username":users.get(token).username + "#" +  users.get(token).discriminator,
                 "avatar": users.get(token).avatar,
@@ -614,7 +613,15 @@ function startServer(client) {
     client.manager.on("trackStart", () => {
 
         log.server("Player : New Track Start-> Actualize all client !")
-        changeMusic += 1
+        
+        
+        let player = client.manager.players.get("137291455336022018")
+
+        if(player) {
+
+            player.seek(0)
+        }
+
         actualize()
 
     })
@@ -645,14 +652,13 @@ function startServer(client) {
             "loop": false,
             "durationNow": null,
             "durationAll": null,
-            "changeMusic": changeMusic,
             "volume": null
         }
 
         if(player) {
 
             data["current"] = player.queue.current
-
+      
             if(player.queueRepeat == true) {
 
                 data["loop"] = true
@@ -666,6 +672,8 @@ function startServer(client) {
                 data["durationAll"] = player.queue.current.duration
             }
             
+          
+
             if(player.playing == true && player.paused == false) {
 
                 data["playing"] = 1
@@ -702,6 +710,9 @@ function startServer(client) {
 
             log.server("ERROR OF ACT")
         }
+
+        
+
       
     }
    
