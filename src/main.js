@@ -404,7 +404,7 @@ function startServer(client) {
 
                 if(player) {
 
-                    player.setVolume(pos * 10)
+                    player.setVolume(pos)
                 }
 
                 actualize()
@@ -658,7 +658,7 @@ function startServer(client) {
                 data["loop"] = true
             } 
 
-            data["volume"] = player.volume
+            data["volume"] = player.volume * 10
             
 
             if(player.queue.current) {
