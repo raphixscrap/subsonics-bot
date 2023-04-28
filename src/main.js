@@ -6,12 +6,16 @@ if ("ENV" in process.env) {
   
 } 
 
-
-const { error } = require("node:console")
 const log = require("./sublog.js")
-const { config } = require("node:process")
-const { platform } = require("node:os")
 
+const nodes = [
+    {
+      host: "lavalink.devamop.in",
+      password: "DevamOP",
+      port: 443,
+      secure: true
+    }
+  ];
 
 function startDiscordBot() {
 
@@ -22,7 +26,7 @@ function startDiscordBot() {
     const fs = require("node:fs")
     const config = require("./config.json")
     const path = require("path")
-    const { Manager, TrackUtils } = require("erela.js")
+    const { Manager  } = require("erela.js")
 
     const client = new Client({
         intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMembers]
@@ -127,14 +131,7 @@ function startDiscordBot() {
 
 
 
-    const nodes = [
-        {
-          host: "lavalink.devamop.in",
-          password: "DevamOP",
-          port: 443,
-          secure: true
-        }
-      ];
+    
 
     client.manager = new Manager({
         // The nodes to connect to, optional if using default lavalink options
@@ -186,7 +183,7 @@ function startServer(client) {
     const fs = require("fs")
     const path = require("path")
 
-
+    var changeMusic = 0
     var link = null
     var discordlink = null
 
@@ -207,12 +204,20 @@ function startServer(client) {
     var onlineNumber = 0;
 
 
-    const tokens = require(__dirname + path.sep + "tokens.json")
+    
 
-    users = new Map()
-    for(var user in tokens) {
+    function reimportUser() {
+        
+        const tokens = require(__dirname + path.sep + "tokens.json")
 
-         users.set(user , tokens[user])
+        users = new Map()
+        for(var user in tokens) {
+            
+            users.set(user , tokens[user])
+        }
+        
+        return users
+
     }
 
   
@@ -315,7 +320,7 @@ function startServer(client) {
         socket.on("authByToken", (token) => {
 
             var answer = false
-
+          
             if(users.has(token)) {
                 answer = true
                
@@ -327,8 +332,16 @@ function startServer(client) {
         })
 
         socket.on("getState", (token) => {
+            reimportUser()
             actualize()
-            sendState(socket, token)    
+            console.log(token)
+            console.log(users)
+            const data = {
+                "username":users.get(token).username + "#" +  users.get(token).discriminator,
+                "avatar": users.get(token).avatar,
+                "id": users.get(token).id,
+            }
+            socket.emit("updateState", data)
         })
 
         socket.on("play", (token) => {
@@ -358,6 +371,48 @@ function startServer(client) {
         process.on("discordDoing", () => {
             log.server("Discord BOT - Doing an action need actualisation !")
             actualize()
+        })
+
+        socket.on("seek", (token, pos) => {
+            if(users.has(token)) {
+
+                
+                log.server("Avancement demandé par " + users.get(token).username + "#" +  users.get(token).discriminator)
+
+                let player = client.manager.players.get("137291455336022018")
+
+                if(player) {
+
+                    player.seek(pos)
+                }
+
+                actualize()
+            } else {
+
+                socket.emit("authFailed")
+            }
+
+        })
+
+        socket.on("volume", (token, pos) => {
+            if(users.has(token)) {
+
+                
+                log.server("Changement de volume demandé par " + users.get(token).username + "#" +  users.get(token).discriminator)
+
+                let player = client.manager.players.get("137291455336022018")
+
+                if(player) {
+
+                    player.setVolume(pos * 10)
+                }
+
+                actualize()
+            } else {
+
+                socket.emit("authFailed")
+            }
+
         })
 
         socket.on("listClear", (token) => {
@@ -468,7 +523,7 @@ function startServer(client) {
                 
                 let player = client.manager.players.get("137291455336022018")
 
-                log.server("Looping demandé par" + users.get(token).username + "#" +  users.get(token).discriminator)
+                log.server("Looping demandé par " + users.get(token).username + "#" +  users.get(token).discriminator)
 
                 if(player) {
 
@@ -513,6 +568,32 @@ function startServer(client) {
 
         })
 
+        socket.on("restart", (token) => {
+
+            if(users.has(token)) {
+               
+                log.server("Restart demandé par " + users.get(token).username + "#" +  users.get(token).discriminator)
+
+                let player = client.manager.players.get("137291455336022018")
+
+                if(player) {
+
+                    player.destroy()
+                }
+
+    
+                  
+                  client.manager.createNode(nodes)
+
+                actualize()
+            } else {
+                socket.emit("authFailed")
+
+            }
+
+
+        })
+
       
     
     });
@@ -533,6 +614,7 @@ function startServer(client) {
     client.manager.on("trackStart", () => {
 
         log.server("Player : New Track Start-> Actualize all client !")
+        changeMusic += 1
         actualize()
 
     })
@@ -562,7 +644,9 @@ function startServer(client) {
             "queue": null,
             "loop": false,
             "durationNow": null,
-            "durationAll": null
+            "durationAll": null,
+            "changeMusic": changeMusic,
+            "volume": null
         }
 
         if(player) {
@@ -574,6 +658,7 @@ function startServer(client) {
                 data["loop"] = true
             } 
 
+            data["volume"] = player.volume
             
 
             if(player.queue.current) {
@@ -619,24 +704,12 @@ function startServer(client) {
         }
       
     }
-    function sendState(socket, token) {
-
-        const data = {
-            "username":users.get(token).username + "#" +  users.get(token).discriminator,
-            "avatar": users.get(token).avatar,
-            "id": users.get(token).id,
-        }
-        socket.emit("updateState", data)
-
-
-    }
+   
 
     app.get("/redirect", (req, res) => {
     
 
         let token = req.cookies.authLoginFollow
-
-       
 
         if(token != null) {
 
