@@ -129,10 +129,10 @@ function startDiscordBot() {
 
     const nodes = [
         {
-          host: "omega.raphix.fr",
-          password: "raphixlavalink",
-          port: 2333,
-          secure: false
+          host: "lavalink.devamop.in",
+          password: "DevamOP",
+          port: 443,
+          secure: true
         }
       ];
 
