@@ -31,15 +31,17 @@ module.exports = {
                 player.destroy()
 
             }
-            
+                        
+                    
             const nodes = [
                 {
-                  host: "lavalink.devamop.in",
-                  password: "DevamOP",
-                  port: 443,
-                  secure: true
+                host: "narco.buses.rocks",
+                password: "glasshost1984",
+                port: 2269,
+                secure: false
                 }
-              ];
+            ];
+
         
               
               client.manager.createNode(nodes)
