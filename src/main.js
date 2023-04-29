@@ -191,9 +191,9 @@ function startServer(client) {
 
         log.server("DEV MOD ENABLED")
         link = "http://localhost:4000" //DEV
-        discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fredirect&response_type=code&scope=guilds%20identify" //DEV
+        discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fredirect&response_type=code&scope=identify%20guilds%20guilds.members.read" //DEV
     } else {
-        discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=https%3A%2F%2Fsubsonics.raphix.fr%2Fredirect&response_type=code&scope=identify%20guilds" //OFFICIEL
+        discordlink = "https://discord.com/api/oauth2/authorize?client_id=1094727789682380922&redirect_uri=https%3A%2F%2Fsubsonics.raphix.fr%2Fredirect&response_type=code&scope=identify%20guilds%20guilds.members.read" //OFFICIEL
         link = "https://subsonics.raphix.fr"
     }
 
@@ -752,7 +752,7 @@ function startServer(client) {
                         params.append('grant_type', 'authorization_code');
                         params.append('code', code);
                         params.append('redirect_uri',  link + "/redirect");
-                        params.append('scope', 'identify guild');
+                        params.append('scope', 'identify guilds');
 
                         fetch('https://discord.com/api/oauth2/token', {
                             method: "POST",
@@ -798,15 +798,48 @@ function startServer(client) {
   
         log.server("Discord Auth : REQUESTING DATA - TOKEN : " + token + " - DISCORD_ACCESS_TOKEN : " + response.access_token)
 
-        fetch('https://discord.com/api/users/@me', {
+        fetch('https://discord.com/api/users/@me/guilds/137291455336022018/member', {
             headers: {
                 authorization: `${response.token_type} ${response.access_token}`,
             },
-        }).then(resp => resp.json()).then(resp => addIdentity(resp, token, socket)).catch(error => log.server.error(error)) 
+        }).then(resp => resp.json()).then(resp => checkIdentity(resp, token, socket, response)).catch(error => log.server.error(error)) 
+       
+    }
 
+    async function checkIdentity(servers, token, socket, creditentials) {
 
+        var checked = false
+
+        if(servers.message) {
+
+            checked = false
+        } else {
+
+            for(var role of servers.roles) {
+
+                if(role == "397725552968204288") {
+
+                    checked = true
+                }
+            }
+
+        }
+
+        if(checked == true) {
+            
+            fetch('https://discord.com/api/users/@me', {
+                headers: {
+                    authorization: `${creditentials.token_type} ${creditentials.access_token}`,
+                },
+            }).then(resp => resp.json()).then(resp => addIdentity(resp, token, socket)).catch(error => log.server.error(error)) 
+
+        } else {
+
+            socket.emit("checkFailed")
+        }
 
        
+
     }
 
     async function addIdentity(response, token, socket) {
