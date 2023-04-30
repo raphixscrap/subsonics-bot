@@ -435,6 +435,55 @@ function startServer(client) {
 
         })
 
+        socket.on("report", (token, report) => {
+            if(users.has(token)) {
+
+                const { EmbedBuilder } = require("discord.js")
+                
+                log.server("Bug report demandé par " + users.get(token).username + "#" +  users.get(token).discriminator)
+                var embed = null
+
+                if(report.type == "Bug") {
+                    embed = new EmbedBuilder()
+                    .setColor(0xff0000)
+                    .setTitle('Bug report de ' +  users.get(token).username + "#" +  users.get(token).discriminator)
+                    .setDescription('**Version **' + report.version)
+                    .addFields({name: "Description", value: report.text})
+                    .setTimestamp();
+    
+
+                } else {
+                    embed = new EmbedBuilder()
+                    .setColor(0x0000ff)
+                    .setTitle('Suggestion de ' +  users.get(token).username + "#" +  users.get(token).discriminator)
+                    .setDescription('**Version **' + report.version)
+                    .addFields({name: "Description", value: report.text})
+                    .setTimestamp();
+    
+    
+
+                }
+
+                
+                sendReport()
+                async function sendReport() {
+                    const channel = await client.channels.fetch('1102177962817749033')
+
+                    channel.send({embeds: [embed]})
+                    channel.send({content: "<@486943594893017119>"})
+               
+                }
+                socket.emit("reportAns", true)
+                actualize()
+            } else {
+
+                socket.emit("authFailed")
+            }
+
+        })
+
+
+
 
         socket.on("deleteQueue", (token, identifier) => {
 
