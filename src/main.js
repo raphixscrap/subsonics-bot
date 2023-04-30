@@ -183,6 +183,11 @@ function startServer(client) {
     const fs = require("fs")
     const path = require("path")
 
+    if(!fs.existsSync(__dirname + path.sep + "tokens.json")) {
+
+        fs.writeFileSync(__dirname + path.sep + "tokens.json", JSON.stringify({}, null, 2))
+
+    }
 
     var link = null
     var discordlink = null
@@ -208,6 +213,7 @@ function startServer(client) {
 
     function reimportUser() {
         
+
         const tokens = require(__dirname + path.sep + "tokens.json")
 
         users = new Map()
@@ -332,15 +338,20 @@ function startServer(client) {
         })
 
         socket.on("getState", (token) => {
-            reimportUser()
-            actualize()
 
-            const data = {
-                "username":users.get(token).username + "#" +  users.get(token).discriminator,
-                "avatar": users.get(token).avatar,
-                "id": users.get(token).id,
-            }
-            socket.emit("updateState", data)
+                const data = {
+                    "username":users.get(token).username + "#" +  users.get(token).discriminator,
+                    "avatar": users.get(token).avatar,
+                    "id": users.get(token).id,
+                }
+
+               actualize()
+
+               socket.emit("updateState", data)
+
+        
+
+           
         })
 
         socket.on("play", (token) => {
@@ -497,6 +508,33 @@ function startServer(client) {
 
                     player.queue.remove(identifier)
 
+
+                }
+               
+                actualize()
+            } else {
+                socket.emit("authFailed")
+
+            }
+
+        })
+
+        socket.on("moveQueue", (token, identifier) => {
+
+            if(users.has(token)) {
+
+                let player = client.manager.players.get("137291455336022018")
+
+                if(player) {
+
+                    log.server("Déplacement (n°" + identifier + ") d'un morceau demandé par " + users.get(token).username + "#" +  users.get(token).discriminator)
+
+                    
+                    let elementToMove = player.queue[identifier]; 
+
+                    player.queue.remove(identifier)
+                    player.queue.unshift(elementToMove);
+                   
 
                 }
                
@@ -901,18 +939,18 @@ function startServer(client) {
         const tokens = require(__dirname + path.sep + "tokens.json")
 
         tokens[token] = response
+        users.set(token, response)
         
-        await fs.writeFileSync(__dirname + path.sep + "tokens.json", JSON.stringify(tokens, null, 2))
+        await fs.writeFile(__dirname + path.sep + "tokens.json", JSON.stringify(tokens, null, 2), () => {
+                
+    
+                reimportUser()
+                socket.emit("successLogin", token)
+                actualize()
+                authTokenWait.delete(token)
 
-        await users.set(token, response)
+        })
 
-
-
-        
-        socket.emit("successLogin", token)
-        actualize()
-
-        authTokenWait.delete(token)
 
     }
 
