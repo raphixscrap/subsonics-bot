@@ -183,6 +183,9 @@ function startServer(client) {
     const fs = require("fs")
     const path = require("path")
 
+    app.use(express.static('error'))
+    app.use(express.static('close'))
+
     if(!fs.existsSync(__dirname + path.sep + "tokens.json")) {
 
         fs.writeFileSync(__dirname + path.sep + "tokens.json", JSON.stringify({}, null, 2))
