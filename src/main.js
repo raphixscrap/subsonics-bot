@@ -183,8 +183,8 @@ function startServer(client) {
     const fs = require("fs")
     const path = require("path")
 
-    app.use(express.static('error'))
-    app.use(express.static('close'))
+    app.use(express.static(__dirname + path.sep + 'error'))
+    app.use(express.static(__dirname + path.sep + 'close'))
 
     if(!fs.existsSync(__dirname + path.sep + "tokens.json")) {
 
