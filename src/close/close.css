@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+body {
+
+    background-color: #171717 !important;
+    font-family: 'Open Sans', sans-serif !important; 
+    padding: 3%;
+}
+
+.top-title {
+
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+
+.top-logo {
+
+    width: 5vw;
+    border-radius: 10%;
+    
+}
+
+.buttonClose {
+
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    font-family: 'noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: white;
+    text-decoration: none;
+    -webkit-app-region: no-drag;
+    margin: 5px;
+    outline: none;
+    
+
+}
+
+.text {
+    text-align: center;
+    font-size: 2vw;
+    color: white;
+    
+
+}
+
+
+
+.boxtext {
+    margin-top: 5%;
+    border-radius: 15px;
+    background-color: #3d3d3d;
+    width: 50%;
+    padding: 3%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.buttonClose:hover {
+
+    color: red;
+}
+
+.buttonClose:active {
+
+    color: rgb(255, 255, 255);
+}
+
+.buttonReduce {
+
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    font-family: 'noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: white;
+    text-decoration: none;
+    -webkit-app-region: no-drag;
+    margin: 5px;
+    outline: none;
+    
+
+}
+
+.buttonReduce:hover {
+
+    color: rgb(46, 196, 255);
+}
+
+.buttonReduce:active {
+
+    color: rgb(255, 255, 255);
+}
+
+
+header {
+
+    display: flex;
+}
+
+.content {
+
+    padding: 5%;
+    padding-top: 0;
+
+}
+
+.buttonFav {
+
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    font-family: 'noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: white;
+    text-decoration: none;
+    -webkit-app-region: no-drag;
+    margin: 0;
+    outline: none;
+    
+
+}
+
+.buttonFav:hover {
+
+    color: rgb(242, 255, 53);
+}
+
+.buttonFav:active {
+
+    color: rgb(255, 255, 255);
+}
+
+.title-t {
+
+   width: +30%;
+   margin-left: 1%;
+   margin-top: 1%;
+   
+}

@@ -817,7 +817,7 @@ function startServer(client) {
                
                 if(req.query.error) {
                     socket.emit("authFailed")
-                    res.send("SubSonics Manager : ERREUR : DISCORD AUTH FAILED !")
+                    res.sendFile(__dirname + path.sep + "error" + path.sep + "error.html")
                     log.server("Discord Auth : Erreur - Refus de connexion chez le service Discord : Token de Connexion : " + token + " associé à Client ID : " + socket.id)
 
                 } else {
@@ -851,7 +851,7 @@ function startServer(client) {
 
 
                         res.clearCookie("authLoginFollow")
-                        res.send("SubSonics Manager : Vous pouvez fermer cette fenêtre ! Si rien ne ce passe sur l'application, prévenez Raphix !")
+                        res.sendFile(__dirname + path.sep + "close" + path.sep + "close.html")
     
 
                     } catch(error) {
@@ -860,7 +860,7 @@ function startServer(client) {
                     }
 
                 } else {
-                    res.send("SubSonics Manager : ERREUR : DISCORD AUTH FAILED !")
+                    res.sendFile(__dirname + path.sep + "error" + path.sep + "error.html")
 
                 }   
 
@@ -868,12 +868,13 @@ function startServer(client) {
             }
 
             } else {
-                res.send("SubSonics Manager : ERREUR : AUCUN TOKEN ENREGISTRÉ !")
+                res.sendFile(__dirname + path.sep + "error" + path.sep + "error.html")
 
             } 
+
         } else {
 
-            res.send("SubSonics Manager : ERREUR : AUCUN TOKEN ENREGISTRÉ !")
+            res.sendFile(__dirname + path.sep + "error" + path.sep + "error.html")
             
         }
 
