@@ -749,6 +749,11 @@ function startServer(client) {
 
             const { ActivityType } = require("discord.js")
 
+            client.user.setPresence({
+                activities: [{ name: `rien pour le moment`, type: ActivityType.Listening }],
+                status: 'dnd',
+            });
+
             data["current"] = player.queue.current
       
             if(player.queueRepeat == true) {
@@ -768,12 +773,7 @@ function startServer(client) {
                     status: 'dnd',
                 });
 
-            } else {
-                client.user.setPresence({
-                    activities: [{ name: `rien pour le moment`, type: ActivityType.Listening }],
-                    status: 'dnd',
-                });
-            }
+            } 
             
           
 
