@@ -21,7 +21,7 @@ function startDiscordBot() {
 
 
 
-    const { Client, GatewayIntentBits, Collection } = require("discord.js")
+    const { Client, GatewayIntentBits, Collection, ActivityType } = require("discord.js")
     const { REST, Routes } = require("discord.js")
     const fs = require("node:fs")
     const config = require("./config.json")
@@ -747,6 +747,7 @@ function startServer(client) {
 
         if(player) {
 
+
             data["current"] = player.queue.current
       
             if(player.queueRepeat == true) {
@@ -760,6 +761,17 @@ function startServer(client) {
             if(player.queue.current) {
                 data["durationNow"] = player.position
                 data["durationAll"] = player.queue.current.duration
+
+                client.user.setPresence({
+                    activities: [{ name: player.queue.current.title, type: ActivityType.Listening }],
+                    status: 'dnd',
+                });
+
+            } else {
+                client.user.setPresence({
+                    activities: [{ name: `rien pour le moment`, type: ActivityType.Listening }],
+                    status: 'dnd',
+                });
             }
             
           
