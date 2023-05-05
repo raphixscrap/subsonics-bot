@@ -7,6 +7,7 @@ if ("ENV" in process.env) {
 } 
 
 const log = require("./sublog.js")
+var membersVoices = new Map()
 
 const nodes = [
     {
@@ -28,9 +29,11 @@ function startDiscordBot() {
     const path = require("path")
     const { Manager  } = require("erela.js")
 
+
     const client = new Client({
-        intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMembers]
+        intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMembers],
     })
+
 
     client.commands = new Collection()
     client.dictator = false;
@@ -80,7 +83,6 @@ function startDiscordBot() {
     client.once("ready", () => {
 
         log.bot("Le meilleur groupe de musique est prêt !")
-        client.user.setActivity(`beaucoup de choses !`, { type: "LISTENING" })
         client.manager.init(client.user.id);
 
         const commandManager = client.application.commands;
@@ -95,6 +97,8 @@ function startDiscordBot() {
     })
 
     client.on("voiceStateUpdate", (oldMember, newMember) => {
+
+        membersVoices.set(newMember.id, newMember.channelId)
 
         let player = client.manager.players.get(oldMember.guild.id)
 
@@ -271,13 +275,22 @@ function startServer(client) {
                 if(users.has(token)) {
                   
                     let player = client.manager.players.get("137291455336022018")
+
+                    var voiceChannel = "664355808250953739"
+          
+
+                    if(membersVoices.has(users.get(token).id) &&  membersVoices.get(users.get(token).id) != null) {
+
+                        voiceChannel = membersVoices.get(users.get(token).id)
+
+                    }
                       
                      if(!player) { 
                     
                         player = client.manager.create({
                         guild: "137291455336022018",
-                        voiceChannel: "664355808250953739",
-                        textChannel: "664355808250953739",
+                        voiceChannel: voiceChannel,
+                        textChannel: voiceChannel,
                         });
             
                         player.connect();
@@ -361,6 +374,7 @@ function startServer(client) {
             if(users.has(token)) {
                
                 log.server("Mise en Play / Pause demandé par " + users.get(token).username + "#" +  users.get(token).discriminator)
+
 
                 let player = client.manager.players.get("137291455336022018")
 
