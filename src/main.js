@@ -747,6 +747,7 @@ function startServer(client) {
 
         if(player) {
 
+            const { ActivityType } = require("discord.js")
 
             data["current"] = player.queue.current
       
