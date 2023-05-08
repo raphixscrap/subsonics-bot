@@ -926,12 +926,14 @@ function startServer(client) {
 
     async function checkIdentity(servers, token, socket, creditentials) {
 
-        var checked = false
+        var checked = true
 
         if(servers.message) {
 
             checked = false
         } else {
+
+            checked = true
 
             for(var role of servers.roles) {
 
