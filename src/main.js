@@ -938,6 +938,19 @@ function startServer(client) {
                 if(role == "397725552968204288") {
 
                     checked = true
+                } else if(role == "172437570905571328") {
+
+                    checked = true
+                } else if(role == "226744358567804928") {
+         
+
+                    checked = true
+            
+                } else if(role == "220649460059996163") {
+         
+
+                    checked = true
+            
                 }
             }
 
