@@ -931,6 +931,7 @@ function startServer(client) {
         if(servers.message) {
 
             checked = false
+            console.log("Discord Auth - DENIED - NOT IN SERVER - Token : " + token)
         } else {
 
             for(var role of servers.roles) {
@@ -938,15 +939,22 @@ function startServer(client) {
                 if(role == "397725552968204288") {
 
                     checked = true
-                } else if(role == "172437570905571328") {
+
+                }
+                
+                if(role == "172437570905571328") {
 
                     checked = true
-                } else if(role == "226744358567804928") {
+                }
+                
+                if(role == "226744358567804928") {
          
 
                     checked = true
             
-                } else if(role == "220649460059996163") {
+                } 
+                
+                if(role == "220649460059996163") {
          
 
                     checked = true
@@ -966,7 +974,7 @@ function startServer(client) {
             }).then(resp => resp.json()).then(resp => addIdentity(resp, token, socket)).catch(error => log.server.error(error)) 
 
         } else {
-
+            console.log("Discord Auth - DENIED - DONT HAVE RANK - Token : " + token)
             socket.emit("checkFailed")
         }
 
