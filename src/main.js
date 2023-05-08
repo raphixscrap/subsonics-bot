@@ -926,7 +926,7 @@ function startServer(client) {
 
     async function checkIdentity(servers, token, socket, creditentials) {
 
-        var checked = false
+        var checked = true
 
         if(servers.message) {
 
