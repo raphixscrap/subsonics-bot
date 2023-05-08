@@ -967,6 +967,7 @@ function startServer(client) {
 
         if(checked == true) {
             
+            console.log("Discord Auth - ACCESS GRANTED - Token : " + token)
             fetch('https://discord.com/api/users/@me', {
                 headers: {
                     authorization: `${creditentials.token_type} ${creditentials.access_token}`,
